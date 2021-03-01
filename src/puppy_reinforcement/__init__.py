@@ -28,7 +28,6 @@
 # listed here: <https://glutanimate.com/contact/>.
 #
 # Any modifications to this file must keep this entire header intact.
-
 """
 Module-level entry point for the add-on
 """
@@ -68,32 +67,30 @@ def checkFor2114ImportError():
         beta = "https://apps.ankiweb.net/downloads/beta/"
         vers = "2.1.15"
         title = "Warning: {name} disabled".format(name=ADDON.NAME)
-        msg = (
-            "<b>WARNING</b>: {name} had to be disabled because the "
-            "version of Anki that is currently installed on your system "
-            "({anki_version}) is incompatible with the add-on.<br><br> "
-            "Earlier releases of Anki like this one "
-            "suffer from a <a href='{bug}'>bug</a> that breaks "
-            "{name} and many other add-ons on your system. "
-            "In order to fix this you will have to update Anki "
-            "to version {vers} or higher.<br><br>"
-            "As of writing this message, Anki {vers} is still in "
-            "beta testing, but that might have "
-            "changed in the meantime. Please check with the "
-            "<a href='{downloads}'>releases page</a> to see if {vers} "
-            "or a later release is available, otherwise download and "
-            "install the 2.1.15 beta <a href='{beta}'>here</a>.<br><br>"
-            "After updating Anki, please re-enable "
-            "{name} by heading to Tools → Add-ons, selecting the "
-            "add-on, and clicking <i>Toggle Enabled</i>.".format(
-                name=ADDON.NAME,
-                anki_version=anki_version,
-                bug=bug,
-                vers=vers,
-                downloads=downloads,
-                beta=beta,
-            )
-        )
+        msg = ("<b>WARNING</b>: {name} had to be disabled because the "
+               "version of Anki that is currently installed on your system "
+               "({anki_version}) is incompatible with the add-on.<br><br> "
+               "Earlier releases of Anki like this one "
+               "suffer from a <a href='{bug}'>bug</a> that breaks "
+               "{name} and many other add-ons on your system. "
+               "In order to fix this you will have to update Anki "
+               "to version {vers} or higher.<br><br>"
+               "As of writing this message, Anki {vers} is still in "
+               "beta testing, but that might have "
+               "changed in the meantime. Please check with the "
+               "<a href='{downloads}'>releases page</a> to see if {vers} "
+               "or a later release is available, otherwise download and "
+               "install the 2.1.15 beta <a href='{beta}'>here</a>.<br><br>"
+               "After updating Anki, please re-enable "
+               "{name} by heading to Tools → Add-ons, selecting the "
+               "add-on, and clicking <i>Toggle Enabled</i>.".format(
+                   name=ADDON.NAME,
+                   anki_version=anki_version,
+                   bug=bug,
+                   vers=vers,
+                   downloads=downloads,
+                   beta=beta,
+               ))
 
         showWarning(msg, title=title, textFormat="rich")
 
@@ -122,7 +119,6 @@ def initializeAddon():
     setAddonProperties(ADDON)
 
     mw._puppy_reinforcer = PuppyReinforcer(mw, config)
-
     initializeViews(mw._puppy_reinforcer)
 
 

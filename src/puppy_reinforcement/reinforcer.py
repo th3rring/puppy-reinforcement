@@ -32,9 +32,12 @@
 
 import random
 import re
+import time
 from pathlib import Path
 
 from aqt.main import AnkiQt
+
+from anki.sched import Scheduler
 
 from .tooltip import dogTooltip
 
@@ -53,6 +56,7 @@ class PuppyReinforcer:
         self._config = config
         self._images: List[str] = []
         self._playlist: List[int] = []  # self._images indexes
+        self._reset_time = time.time() + 60 * 60  # Set initial reset time.
 
         self._state = {
             "cnt": 0,
@@ -67,6 +71,14 @@ class PuppyReinforcer:
 
     def showDog(self, *args, **kwargs):
         config = self._config["local"]
+
+        # Reset the count if we're past the reset time.
+        if time.time() > self._reset_time:
+            print("Day ends at {}".format(self._reset_time))
+            print("Resetting puppies at {}...".format(time.time()))
+            self._state["cnt"] = 0
+            self._state["last"] = 0
+
         self._state["cnt"] += 1
         if self._state["cnt"] != self._state["last"] + self._state["ivl"]:
             return
@@ -76,10 +88,13 @@ class PuppyReinforcer:
         # intermittent reinforcement:
         self._state["ivl"] = max(
             1,
-            config["encourage_every"]
-            + random.randint(-config["max_spread"], config["max_spread"]),
+            config["encourage_every"] +
+            random.randint(-config["max_spread"], config["max_spread"]),
         )
         self._state["last"] = self._state["cnt"]
+
+    def updateResetTime(self, new_reset):
+        self._reset_time = new_reset
 
     def _showTooltip(self, encouragement: str, image_path: str):
         config = self._config["local"]

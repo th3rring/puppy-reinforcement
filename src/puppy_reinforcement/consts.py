@@ -28,7 +28,6 @@
 # listed here: <https://glutanimate.com/contact/>.
 #
 # Any modifications to this file must keep this entire header intact.
-
 """
 Addon-wide constants
 """
@@ -36,47 +35,29 @@ Addon-wide constants
 from ._version import __version__
 from .libaddon.platform import checkAnkiVersion
 
-try:
-    from .data.patrons import MEMBERS_CREDITED, MEMBERS_TOP  # type:ignore
-except ImportError:
-    MEMBERS_CREDITED = MEMBERS_TOP = ()
-
 __all__ = ["ADDON"]
 
 USES_LEGACY_HOOKS = not checkAnkiVersion("2.1.20")
 
 # PROPERTIES DESCRIBING ADDON
 
+
 class ADDON(object):
     """Class storing general add-on properties
     Property names need to be all-uppercase with no leading underscores
     """
 
-    NAME = "Puppy Reinforcement"
-    MODULE = "puppy_reinforcement"
-    ID = "1722658993"
+    NAME = "Puppy Reinforcement for Sanika"
+    MODULE = "puppy_reinforcement_for_sanika"
     VERSION = __version__
     LICENSE = "GNU AGPLv3"
-    AUTHORS = (
-        {
-            "name": "Aristotelis P. (Glutanimate)",
-            "years": "2016-2020",
-            "contact": "https://glutanimate.com",
-        },
-    )
-    AUTHOR_MAIL = "ankiglutanimate@gmail.com"
+    AUTHORS = ({
+        "name": "Sanika Rane & Thomas Herring",
+        "years": "2021",
+        "contact": "https://github.com/th3rring",
+    }, )
+    AUTHOR_MAIL = "teh6@rice.edu"
     LIBRARIES = ()
-    CONTRIBUTORS = ("zjosua",)
+    CONTRIBUTORS = ("zjosua", "glutanimate")
     SPONSORS = ()
-    MEMBERS_CREDITED = MEMBERS_CREDITED  # type:ignore
-    MEMBERS_TOP = MEMBERS_TOP  # type:ignore
-    LINKS = {
-        "patreon": "https://www.patreon.com/glutanimate",
-        "bepatron": "https://www.patreon.com/bePatron?u=7522179",
-        "coffee": "http://ko-fi.com/glutanimate",
-        "description": "https://ankiweb.net/shared/info/{}".format(ID),
-        "rate": "https://ankiweb.net/shared/review/{}".format(ID),
-        "twitter": "https://twitter.com/glutanimate",
-        "youtube": "https://www.youtube.com/c/glutanimate",
-        "help": "",
-    }
+    LINKS = {}

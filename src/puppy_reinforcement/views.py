@@ -31,6 +31,7 @@
 # Any modifications to this file must keep this entire header intact.
 
 from anki.hooks import wrap
+from anki.schedv2 import Scheduler
 from aqt.addcards import AddCards
 from aqt.reviewer import Reviewer
 
@@ -47,6 +48,15 @@ def initializeViews(puppy_reinforcer: PuppyReinforcer):
         reviewer_did_answer_card.append(puppy_reinforcer.showDog)
         if config["local"]["count_adding"]:
             add_cards_did_add_note.append(puppy_reinforcer.showDog)
+
+        def checkDayHook(self, _old):
+            print("New day at {}".format(self.dayCutoff))
+            puppy_reinforcer.updateResetTime(self.dayCutoff)
+            _old(self)
+
+        Scheduler._checkDay = wrap(Scheduler._checkDay,
+                                   checkDayHook,
+                                   pos="around")
 
     except (ImportError, ModuleNotFoundError):  # Anki < 2.1.20
         # TODO: Drop monkey-patches in the future
@@ -67,6 +77,8 @@ def initializeViews(puppy_reinforcer: PuppyReinforcer):
                 puppy_reinforcer.showDog()
             return ret
 
-        Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
+        Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard,
+                                    "around")
+
         if config["local"]["count_adding"]:
             AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
